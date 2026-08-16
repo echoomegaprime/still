@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --font-display: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-background: #0e0e0c;
+  --color-foreground: #eceae3;
+  --color-card: #161613;
+  --color-card-foreground: #eceae3;
+  --color-popover: #1b1b17;
+  --color-popover-foreground: #eceae3;
+  --color-primary: #e4e0d4;
+  --color-primary-foreground: #121210;
+  --color-secondary: #22221d;
+  --color-secondary-foreground: #eceae3;
+  --color-muted: #1f1f1b;
+  --color-muted-foreground: #8c8a82;
+  --color-accent: #2a2a24;
+  --color-accent-foreground: #eceae3;
+  --color-destructive: #c17a6a;
+  --color-destructive-foreground: #1a100e;
+  --color-border: #2c2c26;
+  --color-input: #2c2c26;
+  --color-ring: #c8c4b8;
+  --color-up: #8aa686;
+  --color-down: #c17a6a;
+  --color-paper: #d8d3c4;
+  --color-ink: #0e0e0c;
+  --color-warn: #c4a574;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius: 0.625rem;
+
+  --shadow-border: 0 0 0 1px rgb(236 234 227 / 0.08);
+  --shadow-border-hover: 0 0 0 1px rgb(236 234 227 / 0.14);
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100%;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
