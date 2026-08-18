@@ -6,7 +6,7 @@ This is not a trading bot. It does not click. It locks the next trade after a lo
 
 **Live:** https://still-coral-theta.vercel.app
 
-Installable — open it on your phone and **Add to Home Screen** to run it full-screen, offline-friendly, like a native app.
+Installable — open it on your phone and **Add to Home Screen** to run it full-screen, like a native app.
 
 Harauda, timi rok.
 
