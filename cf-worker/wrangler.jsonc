@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "echo-motions",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // Tick once a minute. Motions is one conservative position and the stop is
+  // broker-side, so sub-minute reaction is unnecessary.
+  "triggers": { "crons": ["* * * * *"] },
+  "durable_objects": {
+    "bindings": [{ "name": "MOTIONS", "class_name": "MotionsController" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["MotionsController"] }],
+  "observability": { "enabled": true },
+  "vars": {
+    // SHADOW by default. Non-secret config only — the token is a secret (below).
+    "GOLD_URL": "https://still-coral-theta.vercel.app/api/gold",
+    "ATR_URL": "https://still-coral-theta.vercel.app/api/atr",
+    "GOLD_SYMBOL": "XAUUSD",
+    "START_EQUITY": "10000"
+    // "MOTIONS_ARM": "1"  ← uncomment ONLY to trade live
+  }
+  // Secrets (set with `wrangler secret put`, never committed):
+  //   METAAPI_TOKEN      ← from the MetaApi dashboard
+  //   MT5_ACCOUNT_ID     ← the provisioned MT5 account id
+  //   METAAPI_BASE_URL   ← region base, e.g. https://mt-client-api-v1.new-york.agiliumtrade.ai
+  //   ADMIN_TOKEN        ← protects /kill and /arm
+}
