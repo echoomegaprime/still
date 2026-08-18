@@ -188,14 +188,35 @@ Non-negotiables regardless of the legal outcome:
 
 ---
 
-## 8. Build order (when/if unblocked)
+## 8. Build order
 
-1. ✅ **Mastery gate scoring + UI** — done, in Still now (`mastery.ts` + the Mastery card). Useful on its own.
-2. **Legal read** on the NRB / adviser-registration questions. **Gate.**
-3. **Read-only broker connection** → score mastery from the real statement (replace the in-app-log input, same function).
-4. **v1 Enforcer** — EA/MetaApi that can only attach stops, close, flatten, and lock; broker-side caps; kill-switch; dashboard = monitor + kill.
-5. **Semi-auto** — propose one pre-approved setup, 60-s human confirm, then manage.
-6. **(Ceiling) v2 constrained autopilot** — only after v1 has run clean on Aakash's account for a long, boring stretch.
+1. ✅ **Mastery gate scoring + UI** — built (`src/lib/still/mastery.ts` + the Mastery card).
+2. ✅ **Motions engine + paper mode + monitor + kill-switch** — built. The full cage runs
+   against the live gold price with no money at risk: decision engine
+   (`src/lib/motions/engine.ts`), paper runner (`paper-broker.ts`), gated monitor
+   (`motions-panel.tsx`). It correctly defers to Still's Watchman (sits on the drawdown
+   circuit today). The **live broker adapter** (`live-broker.ts`, MetaApi RPC, grounded on
+   the current SDK) is written and ready — it just isn't wired to a worker yet.
+3. **Legal read** on the jurisdiction / adviser-registration questions (the Commander has
+   cleared the residency concern; the adviser-registration question still deserves a check
+   before *selling* it to anyone but Aakash).
+4. **Provision** a MetaApi token + Aakash's MT5 account, set the env below, and stand up the
+   **server worker** (VPS / long-running process — never serverless, never the browser) that
+   ticks `decideMotions` and drives `LiveBroker`. Score mastery from the read-only broker
+   statement (same `masteryReport()`), and only arm once the gate is genuinely unlocked.
+5. **(Ceiling) v2 constrained autopilot** — only after v1 has run clean for a long, boring stretch.
+
+### Going live — env (server worker only, never the client)
+
+```
+MOTIONS_METAAPI_TOKEN   = <MetaApi token>
+MOTIONS_MT5_ACCOUNT_ID  = <Aakash's provisioned MT5 account id>
+MOTIONS_GOLD_SYMBOL     = XAUUSD        # broker-specific: some use GOLD / XAUUSD.m
+MOTIONS_METAAPI_REGION  = <optional region>
+```
+
+`liveConfigured()` returns false until the first two are set, so nothing can go live by
+accident. The web app stays paper-only + kill-switch regardless.
 
 ---
 
