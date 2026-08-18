@@ -15,6 +15,7 @@ import { Route as GateRouteImport } from './routes/gate'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PlaybookRouteImport } from './routes/playbook'
+import { Route as ApiAtrRouteImport } from './routes/api/atr'
 import { Route as ApiGoldRouteImport } from './routes/api/gold'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -48,6 +49,11 @@ const PlaybookRoute = PlaybookRouteImport.update({
   path: '/playbook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAtrRoute = ApiAtrRouteImport.update({
+  id: '/api/atr',
+  path: '/api/atr',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiGoldRoute = ApiGoldRouteImport.update({
   id: '/api/gold',
   path: '/api/gold',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/journal': typeof JournalRoute
   '/login': typeof LoginRoute
   '/playbook': typeof PlaybookRoute
+  '/api/atr': typeof ApiAtrRoute
   '/api/gold': typeof ApiGoldRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/journal': typeof JournalRoute
   '/login': typeof LoginRoute
   '/playbook': typeof PlaybookRoute
+  '/api/atr': typeof ApiAtrRoute
   '/api/gold': typeof ApiGoldRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/journal': typeof JournalRoute
   '/login': typeof LoginRoute
   '/playbook': typeof PlaybookRoute
+  '/api/atr': typeof ApiAtrRoute
   '/api/gold': typeof ApiGoldRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/journal'
     | '/login'
     | '/playbook'
+    | '/api/atr'
     | '/api/gold'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/journal'
     | '/login'
     | '/playbook'
+    | '/api/atr'
     | '/api/gold'
     | '/api/auth/$'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/journal'
     | '/login'
     | '/playbook'
+    | '/api/atr'
     | '/api/gold'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   JournalRoute: typeof JournalRoute
   LoginRoute: typeof LoginRoute
   PlaybookRoute: typeof PlaybookRoute
+  ApiAtrRoute: typeof ApiAtrRoute
   ApiGoldRoute: typeof ApiGoldRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaybookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/atr': {
+      id: '/api/atr'
+      path: '/api/atr'
+      fullPath: '/api/atr'
+      preLoaderRoute: typeof ApiAtrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/gold': {
       id: '/api/gold'
       path: '/api/gold'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   JournalRoute: JournalRoute,
   LoginRoute: LoginRoute,
   PlaybookRoute: PlaybookRoute,
+  ApiAtrRoute: ApiAtrRoute,
   ApiGoldRoute: ApiGoldRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

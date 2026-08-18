@@ -29,6 +29,7 @@ import {
 import { getActiveSession, useStill } from "@/lib/still/store";
 import { displayPattern, useT } from "@/lib/still/use-i18n";
 import { GoldTape } from "@/components/still/gold-tape";
+import { IntelPanel } from "@/components/still/intel-panel";
 
 const SESSION_COPY: Record<SessionWindow, { name: MessageKey; hint: MessageKey }> = {
   weekend: { name: "sessWeekend", hint: "sessWeekendHint" },
@@ -76,6 +77,8 @@ export function DeskHome() {
       {locked && session ? <LockPanel sessionId={session.id} /> : null}
 
       <GoldTape />
+
+      <IntelPanel />
 
       <div className="grid gap-3 sm:grid-cols-3">
         <Stat

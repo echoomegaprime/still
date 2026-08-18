@@ -2,12 +2,14 @@ import { useEffect, useRef } from "react";
 import { consecutiveLosses, goldSessionLabel, isSessionLocked } from "@/lib/still/stats";
 import { getActiveSession, useStill } from "@/lib/still/store";
 import { useGoldQuote } from "@/lib/still/use-gold-quote";
+import { useIntel } from "@/lib/still/use-intel";
 import { useT } from "@/lib/still/use-i18n";
 import { watchman } from "@/lib/still/watchman";
 
 export function WatchmanWatcher() {
   const { t } = useT();
   const { quote } = useGoldQuote(30_000);
+  const intel = useIntel(quote);
   const trades = useStill((s) => s.trades);
   const sessions = useStill((s) => s.sessions);
   const settings = useStill((s) => s.settings);
@@ -33,6 +35,7 @@ export function WatchmanWatcher() {
       lastTradeWasLoss: (lastClosed?.pnl ?? 0) < 0,
       hasOpenPlan: trades.some((row) => row.status === "open"),
       price: quote?.price ?? null,
+      intel: intel.watchmanIntel,
     });
     const key = `${verdict.state}:${verdict.key}:${clock.id}`;
     if (!primed.current) {
@@ -59,7 +62,7 @@ export function WatchmanWatcher() {
 
     const kind = sit ? "sit" : level ? "level" : "london";
     const title = t("botName");
-    const body = london && !sit && !level ? t("botWatch") : t(verdict.key);
+    const body = london && !sit && !level ? t("botWatch") : t(verdict.key, verdict.vars);
     pushAlert({ kind, title, body });
 
     if (settings.alertPush && typeof Notification !== "undefined" && Notification.permission === "granted") {

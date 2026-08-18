@@ -4,6 +4,7 @@ import { goldPrice } from "@/lib/still/format";
 import { consecutiveLosses, goldSessionLabel, isSessionLocked } from "@/lib/still/stats";
 import { getActiveSession, useStill } from "@/lib/still/store";
 import { useGoldQuote } from "@/lib/still/use-gold-quote";
+import { useIntel } from "@/lib/still/use-intel";
 import { useT } from "@/lib/still/use-i18n";
 import { watchman } from "@/lib/still/watchman";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 export function GoldTape() {
   const { t } = useT();
   const { quote, history, error } = useGoldQuote();
+  const intel = useIntel(quote);
   const trades = useStill((s) => s.trades);
   const sessions = useStill((s) => s.sessions);
   const session = getActiveSession(sessions);
@@ -28,6 +30,7 @@ export function GoldTape() {
     lastTradeWasLoss: (lastClosed?.pnl ?? 0) < 0,
     hasOpenPlan: trades.some((row) => row.status === "open"),
     price: quote?.price ?? null,
+    intel: intel.watchmanIntel,
   });
 
   const change = quote?.change;
@@ -94,7 +97,7 @@ export function GoldTape() {
                   : t("botStateWait")}
           </Badge>
         </div>
-        <p className="mt-3 font-display text-2xl leading-snug">{t(verdict.key)}</p>
+        <p className="mt-3 font-display text-2xl leading-snug">{t(verdict.key, verdict.vars)}</p>
         <p className="mt-2 text-sm text-muted-foreground">{t("botNeverClicks")}</p>
         {verdict.state === "name-it" || verdict.state === "watch" ? (
           <Link
