@@ -1,0 +1,31 @@
+# Motions worker — the Still autopilot daemon.
+# Install: sudo cp echo-motions-worker.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now echo-motions-worker
+#
+# SHADOW by default (no creds). To go live, drop the broker creds into
+# /etc/echo/motions.env and set MOTIONS_ARM=1 there, then restart. The kill
+# file /etc/echo/motions.halt stops new entries even while the unit runs.
+[Unit]
+Description=Motions worker (Still autopilot)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=forge
+WorkingDirectory=/home/forge/echo-motions
+ExecStart=/usr/bin/node /home/forge/echo-motions/motions-worker.mjs
+# Broker creds + MOTIONS_ARM live here (chmod 600). Optional in shadow mode.
+EnvironmentFile=-/etc/echo/motions.env
+Restart=always
+RestartSec=5
+MemoryMax=256M
+# Harden: the worker only needs its own dir + the halt/env paths.
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/home/forge/echo-motions
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=echo-motions
+
+[Install]
+WantedBy=multi-user.target
