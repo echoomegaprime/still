@@ -30,6 +30,7 @@ import { getActiveSession, useStill } from "@/lib/still/store";
 import { displayPattern, useT } from "@/lib/still/use-i18n";
 import { GoldTape } from "@/components/still/gold-tape";
 import { IntelPanel } from "@/components/still/intel-panel";
+import { MasteryCard } from "@/components/still/mastery-card";
 
 const SESSION_COPY: Record<SessionWindow, { name: MessageKey; hint: MessageKey }> = {
   weekend: { name: "sessWeekend", hint: "sessWeekendHint" },
@@ -79,6 +80,8 @@ export function DeskHome() {
       <GoldTape />
 
       <IntelPanel />
+
+      <MasteryCard />
 
       <div className="grid gap-3 sm:grid-cols-3">
         <Stat

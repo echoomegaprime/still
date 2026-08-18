@@ -97,6 +97,21 @@ const en = {
   intelSweepHit: "Swept {level} — sit 15m",
   intelWaiting: "Warming up — needs a live print",
 
+  // --- Mastery gate (the lock in front of Motions) ---
+  masteryTitle: "Mastery",
+  masterySubtitle: "Motions — the autopilot — stays locked until the book proves discipline. Not time. Discipline.",
+  masteryScore: "Discipline score",
+  masteryLocked: "Motions locked",
+  masteryUnlocked: "Motions ready",
+  masteryProgress: "{pct}% to unlock",
+  masReqTrades: "{have} / {need} counted trades",
+  masReqDays: "{have} / {need} days of history",
+  masReqWeeks: "{have} / {need} distinct weeks",
+  masReqNoBreach: "No hard breach in 60 days",
+  masReqExpectancy: "Positive expectancy",
+  masReqScore: "Score {have} / {need}",
+  masteryFootnote: "When Motions is live this is scored from your broker statement, not this app.",
+
   trueBook: "True book",
   friendsThink: "Friends think {amount}",
   risk1: "1% risk",
@@ -541,6 +556,21 @@ const np: Dict = {
   intelSweepClear: "Sweep chaina",
   intelSweepHit: "{level} sweep bhayo — 15m bas",
   intelWaiting: "Tatdai — live print chahinchha",
+
+  // --- Mastery gate (the lock in front of Motions) ---
+  masteryTitle: "Mastery",
+  masterySubtitle: "Motions — autopilot — book le discipline pramanit nagaresamma locked rahanchha. Samaya le hoina. Discipline le.",
+  masteryScore: "Discipline score",
+  masteryLocked: "Motions locked",
+  masteryUnlocked: "Motions taiyar",
+  masteryProgress: "unlock huna {pct}%",
+  masReqTrades: "{have} / {need} counted trade",
+  masReqDays: "{have} / {need} din ko history",
+  masReqWeeks: "{have} / {need} alag hapta",
+  masReqNoBreach: "60 din ma hard breach chaina",
+  masReqExpectancy: "Positive expectancy",
+  masReqScore: "Score {have} / {need}",
+  masteryFootnote: "Motions live bhaye pachhi yo timro broker statement bata score hunchha, yo app bata hoina.",
 
   trueBook: "Asli khata",
   friendsThink: "Sathi haru sochchhan {amount}",
