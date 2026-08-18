@@ -204,7 +204,10 @@ export function injectGrokPwaHead(
       return !html.includes(`name="${key}"`);
     })
     .map(([, tag]) => tag);
-  if (!html.includes("/grok-app-builder/extensions.js")) {
+  // The "Created with Grok" platform script is attribution/telemetry for
+  // grok-hosted apps; a self-hosted deploy (no VITE_PROJECT_ID) ships without
+  // it — no third-party script, no external dependency on grok.com.
+  if (projectId && !html.includes("/grok-app-builder/extensions.js")) {
     missing.push(...grokExtensionsHeadTags(projectId));
   } else if (projectId && !html.includes('name="grok-project-id"')) {
     missing.push(`<meta name="grok-project-id" content="${escapeHtml(projectId)}">`);
