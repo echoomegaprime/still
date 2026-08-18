@@ -15,7 +15,6 @@
 import installPageTemplate from "../../scripts/install-page.html?raw";
 import {
   acceptsHtml,
-  appNameFromHost,
   createHeadInjector,
   isDocumentPath,
   isInstallQuery,
@@ -27,6 +26,11 @@ interface GrokPwaEvent {
   url: URL;
   req: { method: string; headers: Headers };
 }
+
+// Still is a single-brand product, not a multi-tenant preview host, so the PWA
+// name is fixed rather than derived from whatever hostname served the request
+// (which on a Vercel preview URL is a hash salad like "Still Pe37k8k7j …").
+const BRAND_NAME = "Still";
 
 function requestHost(event: GrokPwaEvent): string {
   return (
@@ -66,7 +70,7 @@ export default async function grokPwaMiddleware(
   const urlWithQuery = path + event.url.search;
 
   if (path === "/__grok/manifest.webmanifest" || path === "/__grok/manifest.json") {
-    return new Response(renderWebManifest(requestHost(event)), {
+    return new Response(renderWebManifest(requestHost(event), BRAND_NAME), {
       headers: {
         "content-type": "application/manifest+json; charset=utf-8",
         "cache-control": "no-cache",
@@ -100,7 +104,7 @@ export default async function grokPwaMiddleware(
     String(result.headers.get("content-type") ?? "").includes("text/html") &&
     !result.headers.get("content-encoding")
   ) {
-    return injectHeadStreaming(result, appNameFromHost(requestHost(event)));
+    return injectHeadStreaming(result, BRAND_NAME);
   }
   return result;
 }
